@@ -229,7 +229,7 @@ class BatchAnalyze:
                     start_index = html_code.find("<table>")
                     end_index = html_code.rfind("</table>") + len("</table>")
                     table_res_dict["table_res"]["html"] = html_code[start_index:end_index]
-
+        '''
         # OCR det
         if self.enable_ocr_det_batch:
             # 批处理模式 - 按语言和分辨率分组
@@ -349,6 +349,8 @@ class BatchAnalyze:
 
                                 ocr_res_list_dict['layout_res'].extend(ocr_result_list)
         else:
+            pass
+            
             # 原始单张处理模式
             for ocr_res_list_dict in tqdm(ocr_res_list_all_page, desc="OCR-det Predict"):
                 # Process each area that requires OCR processing
@@ -403,8 +405,8 @@ class BatchAnalyze:
 
                         # Remove the fields after adding to lists
                         layout_res_item.pop('np_img')
-                        layout_res_item.pop('lang')
-
+                        layout_res_item.pop('lang')'''
+        '''
         if len(img_crop_lists_by_lang) > 0:
 
             # Process OCR by language
@@ -442,5 +444,5 @@ class BatchAnalyze:
                                 layout_res_item['category_id'] = 16
 
                     total_processed += len(img_crop_list)
-
+'''
         return images_layout_res

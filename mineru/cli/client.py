@@ -103,7 +103,7 @@ from .common import do_parse, read_fn, pdf_suffixes, image_suffixes
     'formula_enable',
     type=bool,
     help='Enable formula parsing. Default is True. Adapted only for the case where the backend is set to "pipeline".',
-    default=True,
+    default=False,
 )
 @click.option(
     '-t',
@@ -111,7 +111,7 @@ from .common import do_parse, read_fn, pdf_suffixes, image_suffixes
     'table_enable',
     type=bool,
     help='Enable table parsing. Default is True. Adapted only for the case where the backend is set to "pipeline".',
-    default=True,
+    default=False,
 )
 @click.option(
     '-d',
