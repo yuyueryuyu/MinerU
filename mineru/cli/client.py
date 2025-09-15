@@ -102,7 +102,7 @@ from .common import do_parse, read_fn, pdf_suffixes, image_suffixes
     '--formula',
     'formula_enable',
     type=bool,
-    help='Enable formula parsing. Default is True. Adapted only for the case where the backend is set to "pipeline".',
+    help='Enable formula parsing. Default is False. Adapted only for the case where the backend is set to "pipeline".',
     default=False,
 )
 @click.option(
@@ -110,7 +110,14 @@ from .common import do_parse, read_fn, pdf_suffixes, image_suffixes
     '--table',
     'table_enable',
     type=bool,
-    help='Enable table parsing. Default is True. Adapted only for the case where the backend is set to "pipeline".',
+    help='Enable table parsing. Default is False. Adapted only for the case where the backend is set to "pipeline".',
+    default=False,
+)
+@click.option(
+    '--ocr',
+    'ocr_enable',
+    type=bool,
+    help='Enable OCR. Default is False. Adapted only for the case where the backend is set to "pipeline".',
     default=False,
 )
 @click.option(
@@ -143,7 +150,7 @@ def main(
         ctx,
         input_path, output_dir, method, backend, lang, server_url,
         start_page_id, end_page_id, formula_enable, table_enable,
-        device_mode, virtual_vram, model_source, **kwargs
+        ocr_enable, device_mode, virtual_vram, model_source, **kwargs
 ):
 
     kwargs.update(arg_parse(ctx))
@@ -191,6 +198,7 @@ def main(
                 parse_method=method,
                 formula_enable=formula_enable,
                 table_enable=table_enable,
+                ocr_enable=ocr_enable,
                 server_url=server_url,
                 start_page_id=start_page_id,
                 end_page_id=end_page_id,

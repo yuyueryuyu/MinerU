@@ -168,6 +168,7 @@ def _process_pipeline(
         parse_method,
         p_formula_enable,
         p_table_enable,
+        p_ocr_enable,
         f_draw_layout_bbox,
         f_draw_span_bbox,
         f_dump_md,
@@ -184,7 +185,8 @@ def _process_pipeline(
     infer_results, all_image_lists, all_pdf_docs, lang_list, ocr_enabled_list = (
         pipeline_doc_analyze(
             pdf_bytes_list, p_lang_list, parse_method=parse_method,
-            formula_enable=p_formula_enable, table_enable=p_table_enable
+            formula_enable=p_formula_enable, table_enable=p_table_enable, 
+            ocr_enable=p_ocr_enable
         )
     )
 
@@ -304,8 +306,9 @@ def do_parse(
         p_lang_list: list[str],
         backend="pipeline",
         parse_method="auto",
-        formula_enable=True,
-        table_enable=True,
+        formula_enable=False,
+        table_enable=False,
+        ocr_enable=False,
         server_url=None,
         f_draw_layout_bbox=True,
         f_draw_span_bbox=True,
@@ -325,7 +328,7 @@ def do_parse(
     if backend == "pipeline":
         _process_pipeline(
             output_dir, pdf_file_names, pdf_bytes_list, p_lang_list,
-            parse_method, formula_enable, table_enable,
+            parse_method, formula_enable, table_enable, ocr_enable,
             f_draw_layout_bbox, f_draw_span_bbox, f_dump_md, f_dump_middle_json,
             f_dump_model_output, f_dump_orig_pdf, f_dump_content_list, f_make_md_mode
         )
@@ -351,8 +354,9 @@ async def aio_do_parse(
         p_lang_list: list[str],
         backend="pipeline",
         parse_method="auto",
-        formula_enable=True,
-        table_enable=True,
+        formula_enable=False,
+        table_enable=False,
+        ocr_enable=False,
         server_url=None,
         f_draw_layout_bbox=True,
         f_draw_span_bbox=True,
@@ -373,7 +377,7 @@ async def aio_do_parse(
         # pipeline模式暂不支持异步，使用同步处理方式
         _process_pipeline(
             output_dir, pdf_file_names, pdf_bytes_list, p_lang_list,
-            parse_method, formula_enable, table_enable,
+            parse_method, formula_enable, table_enable, ocr_enable,
             f_draw_layout_bbox, f_draw_span_bbox, f_dump_md, f_dump_middle_json,
             f_dump_model_output, f_dump_orig_pdf, f_dump_content_list, f_make_md_mode
         )

@@ -71,8 +71,9 @@ def doc_analyze(
         pdf_bytes_list,
         lang_list,
         parse_method: str = 'auto',
-        formula_enable=True,
-        table_enable=True,
+        formula_enable=False,
+        table_enable=False,
+        ocr_enable=False,
 ):
     """
     适当调大MIN_BATCH_INFERENCE_SIZE可以提高性能，更大的 MIN_BATCH_INFERENCE_SIZE会消耗更多内存，
@@ -126,7 +127,7 @@ def doc_analyze(
             f'Batch {index + 1}/{len(batch_images)}: '
             f'{processed_images_count} pages/{len(images_with_extra_info)} pages'
         )
-        batch_results = batch_image_analyze(batch_image, formula_enable, table_enable)
+        batch_results = batch_image_analyze(batch_image, formula_enable, table_enable, ocr_enable)
         results.extend(batch_results)
 
     # 构建返回结果
@@ -149,8 +150,9 @@ def doc_analyze(
 
 def batch_image_analyze(
         images_with_extra_info: List[Tuple[Image.Image, bool, str]],
-        formula_enable=True,
-        table_enable=True):
+        formula_enable=False,
+        table_enable=False,
+        ocr_enable=False):
 
     from .batch_analyze import BatchAnalyze
 
@@ -198,7 +200,7 @@ def batch_image_analyze(
     else:
         enable_ocr_det_batch = True
 
-    batch_model = BatchAnalyze(model_manager, batch_ratio, formula_enable, table_enable, enable_ocr_det_batch)
+    batch_model = BatchAnalyze(model_manager, batch_ratio, formula_enable, table_enable, ocr_enable, enable_ocr_det_batch)
     results = batch_model(images_with_extra_info)
 
     clean_memory(get_device())
